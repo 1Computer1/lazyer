@@ -1,0 +1,30 @@
+{
+  "name": "lazyer",
+  "version": "0.1.0",
+  "description": "Lazy iteration in JavaScript.",
+  "main": "./src/index.js",
+  "author": "1Computer",
+  "license": "MIT",
+  "keywords": [
+    "lazy",
+    "iteration",
+    "iter"
+  ],
+  "dependencies": {},
+  "devDependencies": {
+    "eslint": "^5.1.0"
+  },
+  "scripts": {
+    "test": "npm run lint && npm run unit-tests",
+    "lint": "eslint src && eslint test",
+    "unit-tests": "node test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/1Computer1/lazyer.git"
+  },
+  "bugs": {
+    "url": "https://github.com/1Computer1/lazyer/issues"
+  },
+  "homepage": "https://github.com/1Computer1/lazyer"
+}
