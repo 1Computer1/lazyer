@@ -15,20 +15,19 @@ lazy.from(people)
     .map(person => `${person.firstName} ${person.lastName}`)
     .map(name => name.toUpperCase())
     .forEach(name => console.log(name));
-// That was all one iteration!
 ```
 
 And infinite sequences:  
 
 ```js
 const lazy = require('lazyer');
-const fibonacci = lazy.range(0, Infinity)
+
+lazy.range(0, Infinity)
     .scan(([a, b]) => [b, a + b], [0, 1])
     .map(([a]) => a)
     .take(10)
-    .collect();
-console.log(fibonacci);
-// → [1, 1, 2, 3, 5, 8, 13, 21, 34, 55]
+    .collect()
+→ [1, 1, 2, 3, 5, 8, 13, 21, 34, 55]
 ```
 
 Works with anything iterable:  
@@ -37,11 +36,11 @@ Works with anything iterable:
 const lazy = require('lazyer');
 const string = 'Hello World!';
 const set = new Set(string);
-const map = lazy.range(0)
+
+lazy.range(0)
     .zip(set)
-    .collectMap();
-console.log(map);
-/* → Map {
+    .collectMap()
+→ Map {
     0 => 'H',
     1 => 'e',
     2 => 'l',
@@ -50,7 +49,8 @@ console.log(map);
     5 => 'W',
     6 => 'r',
     7 => 'd',
-    8 => '!' } */
+    8 => '!'
+}
 ```
 
 And does a bunch of useful things:  
@@ -61,15 +61,13 @@ const longest = lazy.from(listOfListOfNodes)
     .flatten()
     .flatMap(node => node.children)
     .max(node => node.data.length);
-console.log(longest);
-// Simple!
 ```
 
 ### Functions
 
 Functions that create a lazy iterator.  
 
-- `for`
+- `from`
 - `of`
 - `range` 
 - `repeat`
