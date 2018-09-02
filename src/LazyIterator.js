@@ -224,10 +224,10 @@ class LazyIterator {
     /**
      * Returns an iterator that flattens iterators and iterables inside this interator.
      * @param {number} [depth=1] The amount of depth to flatten.
-     * @returns {FlattenIterator} The iterator.
+     * @returns {FlatIterator} The iterator.
      */
-    flatten(depth = 1) {
-        return new FlattenIterator(this, depth);
+    flat(depth = 1) {
+        return new FlatIterator(this, depth);
     }
 
     /**
@@ -1139,18 +1139,18 @@ class ZipIterator extends LazyIterator {
     }
 }
 
-class FlattenIterator extends LazyIterator {
+class FlatIterator extends LazyIterator {
     constructor(iterator, depth) {
         super(iterator);
         this.depth = depth;
-        this.flattenIterator = null;
+        this.flatIterator = null;
     }
 
     next() {
-        if (this.flattenIterator) {
-            const item = this.flattenIterator.next();
+        if (this.flatIterator) {
+            const item = this.flatIterator.next();
             if (item.done) {
-                this.flattenIterator = null;
+                this.flatIterator = null;
                 return this.next();
             }
 
@@ -1163,8 +1163,8 @@ class FlattenIterator extends LazyIterator {
         }
 
         if (this.depth > 0 && (LazyIterator.isIterable(item.value) || LazyIterator.isIterator(item.value))) {
-            this.flattenIterator = new FlattenIterator(LazyIterator.from(item.value), this.depth - 1);
-            return this.flattenIterator.next();
+            this.flatIterator = new FlatIterator(LazyIterator.from(item.value), this.depth - 1);
+            return this.flatIterator.next();
         }
 
         return item;
@@ -1175,14 +1175,14 @@ class FlatMapIterator extends LazyIterator {
     constructor(iterator, fn) {
         super(iterator);
         this.fn = fn;
-        this.flattenIterator = null;
+        this.flatIterator = null;
     }
 
     next() {
-        if (this.flattenIterator) {
-            const item = this.flattenIterator.next();
+        if (this.flatIterator) {
+            const item = this.flatIterator.next();
             if (item.done) {
-                this.flattenIterator = null;
+                this.flatIterator = null;
                 return this.next();
             }
 
@@ -1196,8 +1196,8 @@ class FlatMapIterator extends LazyIterator {
 
         const value = this.fn(item.value);
         if (LazyIterator.isIterable(value) || LazyIterator.isIterator(value)) {
-            this.flattenIterator = new FlattenIterator(LazyIterator.from(value), 1);
-            return this.flattenIterator.next();
+            this.flatIterator = new FlatIterator(LazyIterator.from(value), 1);
+            return this.flatIterator.next();
         }
 
         return { done: false, value };

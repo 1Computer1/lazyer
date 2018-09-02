@@ -126,21 +126,21 @@ should('zip multiple iterators together', () => {
 
 should('flatten with depth of infinity', () => {
     const res = lazy.from([[1, 2], 3, [4], [5, [6, 7], 8, [[9], 10], 11], [12, 13, 14], 15])
-        .flatten(Infinity)
+        .flat(Infinity)
         .collect();
     return equal(res, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]);
 });
 
 should('flatten with depth of 1', () => {
     const res = lazy.from([[1, 2], [3, 4], [[5, 6, 7, 8]], 9, 10])
-        .flatten(1)
+        .flat(1)
         .collect();
     return equal(res, [1, 2, 3, 4, [5, 6, 7, 8], 9, 10]);
 });
 
 should('flatten with depth of 2', () => {
     const res = lazy.from([[1, 2], [3, 4], [[5, 6, 7, 8]], 9, 10])
-        .flatten(2)
+        .flat(2)
         .collect();
     return equal(res, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
 });

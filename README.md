@@ -58,7 +58,7 @@ And does a bunch of useful things:
 ```js
 const lazy = require('lazyer');
 const longest = lazy.from(listOfListOfNodes)
-    .flatten()
+    .flat()
     .flatMap(node => node.children)
     .max(node => node.data.length);
 ```
@@ -92,7 +92,7 @@ A consumer needs to be called before any of these will be executed.
 - `filter`
 - `scan`
 - `zip`
-- `flatten`
+- `flat`
 - `flatMap`
 - `join`
 - `joinWith`
