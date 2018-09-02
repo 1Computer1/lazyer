@@ -22,12 +22,12 @@ And infinite sequences:
 ```js
 const lazy = require('lazyer');
 
-lazy.range(0, Infinity)
+lazy.range()
     .scan(([a, b]) => [b, a + b], [0, 1])
     .map(([a]) => a)
     .take(10)
-    .collect()
-→ [1, 1, 2, 3, 5, 8, 13, 21, 34, 55]
+    .collect();
+→ [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]
 ```
 
 Works with anything iterable:  

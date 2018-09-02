@@ -110,9 +110,16 @@ should('filter values based on a predicate', () => {
     return equal(res, [2, 4]);
 });
 
-should('do iterations holding an internal state', () => {
+should('do iterations holding an internal state with initial value', () => {
     const res = lazy.from([1, 2, 3, 4])
         .scan((acc, n) => acc + n, 0)
+        .collect();
+    return equal(res, [0, 1, 3, 6, 10]);
+});
+
+should('do iterations holding an internal state without initial value', () => {
+    const res = lazy.from([1, 2, 3, 4])
+        .scan((acc, n) => acc + n)
         .collect();
     return equal(res, [1, 3, 6, 10]);
 });
@@ -384,5 +391,5 @@ should('generate the fibonacci sequence', () => {
         .map(([a]) => a)
         .take(10)
         .collect();
-    return equal(res, [1, 1, 2, 3, 5, 8, 13, 21, 34, 55]);
+    return equal(res, [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]);
 });

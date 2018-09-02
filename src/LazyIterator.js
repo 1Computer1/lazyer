@@ -204,7 +204,7 @@ class LazyIterator {
      * Each element of the iterator is the state at that iteration.
      * This can be thought of as a reduce.
      * @param {Reducer} fn Reducer function.
-     * @param {any} accum Accumulator.
+     * @param {any} [accum] Accumulator.
      * @returns {ScanIterator} The iterator.
      */
     scan(fn, accum) {
@@ -1111,9 +1111,26 @@ class ScanIterator extends LazyIterator {
         super(iterator);
         this.fn = fn;
         this.accum = accum;
+        this.yieldedStart = false;
     }
 
     next() {
+        if (!this.yieldedStart) {
+            if (this.accum !== undefined) {
+                this.yieldedStart = true;
+                return { done: false, value: this.accum };
+            }
+
+            const item = this.iterator.next();
+            if (item.done) {
+                throw new TypeError('Scan of empty sequence with no initial value');
+            }
+
+            this.yieldedStart = true;
+            this.accum = item.value;
+            return item;
+        }
+
         const item = this.iterator.next();
         if (item.done) {
             return { done: true };
