@@ -232,6 +232,17 @@ should('not find an index in the iterator', () => {
     return res === -1;
 });
 
+should('check if the iterator includes a value', () => {
+    const res = lazy.from([1, 2, 3, 4, 5]).includes(3);
+    return res;
+});
+
+should('check if the iterator includes a value from some index', () => {
+    const res1 = lazy.from([1, 2, 3, 4, 5]).includes(3, 2);
+    const res2 = lazy.from([1, 2, 3, 4, 5]).includes(3, 3);
+    return res1 && !res2;
+});
+
 should('check every element passes a predicate', () => {
     const res = lazy.from([2, 4, 6, 8]).every(n => n % 2 === 0);
     return res;

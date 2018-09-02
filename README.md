@@ -114,6 +114,7 @@ These methods start the iteration.
 - `product`
 - `find`
 - `findIndex`
+- `includes`
 - `every`
 - `some`
 - `max`

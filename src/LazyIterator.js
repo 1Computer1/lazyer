@@ -379,6 +379,29 @@ class LazyIterator {
     }
 
     /**
+     * Checks if a value is in the iterator.
+     * This consumes the iterator until the found value.
+     * @param {any} searchElement Value to look for inclusion.
+     * @param {number} [from=0] Index to search from.
+     * @returns {boolean} Whether the value was found.
+     */
+    includes(searchElement, from = 0) {
+        let i = 0;
+        for (const value of this) {
+            if (i < from) {
+                i++;
+                continue;
+            }
+
+            if (sameValueZero(searchElement, value)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * Checks that every element in the iterator passes the predicate.
      * This consumes the iterator until a value that does not pass the predicate.
      * @param {Predicate} fn Predicate function.
