@@ -1,5 +1,14 @@
-const { isDeepStrictEqual: equal } = require('util');
+const assert = require('assert');
 const lazy = require('..');
+
+const equal = (a, b) => {
+    try {
+        assert.deepStrictEqual(a, b);
+        return true;
+    } catch (e) {
+        return false;
+    }
+};
 
 const should = (desc, fn) => {
     if (!fn()) {
