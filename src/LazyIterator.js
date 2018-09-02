@@ -598,7 +598,7 @@ class LazyIterator {
      * @param {CollectionExtender} [extend] Extends a collection.
      * @returns {any[]}
      */
-    group(eq = (a, b) => a === b, cons = consFunctions.Array, extend = extendFunctions.Array) {
+    group(eq = (a, b) => sameValueZero(a, b), cons = consFunctions.Array, extend = extendFunctions.Array) {
         const arr = [];
         let accum = cons();
         let prev = null;
@@ -790,6 +790,18 @@ class LazyIterator {
         }());
     }
 }
+
+const sameValueZero = (a, b) => {
+    if (a === 0 && b === 0) {
+        return 1 / a === 1 / b;
+    }
+
+    if (a === b) {
+        return true;
+    }
+
+    return isNaN(a) && isNaN(b);
+};
 
 const consFunctions = {
     Array: () => {
