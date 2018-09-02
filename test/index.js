@@ -1,18 +1,9 @@
-const assert = require('assert');
+const { isDeepStrictEqual: equal } = require('util');
 const lazy = require('..');
 
 const should = (desc, fn) => {
     if (!fn()) {
         throw new Error(`Test did not ${desc}`);
-    }
-};
-
-const equal = (a, b) => {
-    try {
-        assert.deepStrictEqual(a, b);
-        return true;
-    } catch (e) {
-        return false;
     }
 };
 
@@ -176,9 +167,10 @@ should('join the iterator with another iterator', () => {
 });
 
 should('call a function for each element', () => {
-    let count = 0;
-    lazy.for([1, 2, 3, 4]).forEach(() => count++);
-    return count === 4;
+    let count1 = 0;
+    let count2 = 0;
+    lazy.for([1, 2, 3, 4]).each(() => count1++).forEach(() => count2++);
+    return count1 === count2 && count1 === 4;
 });
 
 should('reduce without an initial value', () => {
