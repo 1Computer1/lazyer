@@ -170,7 +170,7 @@ class LazyIterator {
      * @returns {ConcatIterator} The iterator.
      */
     concat(...iters) {
-        return new ConcatIterator(this, iters.map(iter => LazyIterator.for(iter)));
+        return new ConcatIterator(this, iters.map(iter => LazyIterator.from(iter)));
     }
 
     /**
@@ -218,7 +218,7 @@ class LazyIterator {
      * @returns {ZipIterator} The iterator.
      */
     zip(...iters) {
-        return new ZipIterator(this, iters.map(iter => LazyIterator.for(iter)));
+        return new ZipIterator(this, iters.map(iter => LazyIterator.from(iter)));
     }
 
     /**
@@ -255,7 +255,7 @@ class LazyIterator {
      * @returns {JoinWithIterator} The iterator.
      */
     joinWith(iter) {
-        return new JoinWithIterator(this, LazyIterator.for(iter));
+        return new JoinWithIterator(this, LazyIterator.from(iter));
     }
 
     /**
@@ -692,11 +692,11 @@ class LazyIterator {
     }
 
     /**
-     * Creates a lazy iterator for a iterator or iterable.
+     * Creates a lazy iterator from an iterator or iterable.
      * @param {Iterator|Iterable} iter Iterator or iterable.
      * @returns {LazyIterator} The iterator.
      */
-    static for(iter) {
+    static from(iter) {
         if (LazyIterator.isIterator(iter)) {
             return new LazyIterator(iter);
         }
@@ -706,6 +706,11 @@ class LazyIterator {
         }
 
         throw new TypeError('Value given is not iterable or an iterator');
+    }
+
+    // Alias for above.
+    static for(iter) {
+        return LazyIterator.from(iter);
     }
 
     /**
@@ -1123,7 +1128,7 @@ class FlattenIterator extends LazyIterator {
         }
 
         if (this.depth > 0 && (LazyIterator.isIterable(item.value) || LazyIterator.isIterator(item.value))) {
-            this.flattenIterator = new FlattenIterator(LazyIterator.for(item.value), this.depth - 1);
+            this.flattenIterator = new FlattenIterator(LazyIterator.from(item.value), this.depth - 1);
             return this.flattenIterator.next();
         }
 
@@ -1156,7 +1161,7 @@ class FlatMapIterator extends LazyIterator {
 
         const value = this.fn(item.value);
         if (LazyIterator.isIterable(value) || LazyIterator.isIterator(value)) {
-            this.flattenIterator = new FlattenIterator(LazyIterator.for(value), 1);
+            this.flattenIterator = new FlattenIterator(LazyIterator.from(value), 1);
             return this.flattenIterator.next();
         }
 

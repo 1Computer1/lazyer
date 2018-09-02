@@ -10,7 +10,7 @@ It can be used for working with finite sequences:
 
 ```js
 const lazy = require('lazyer');
-lazy.for(people)
+lazy.from(people)
     .filter(person => person.age >= 65)
     .map(person => `${person.firstName} ${person.lastName}`)
     .map(name => name.toUpperCase())
@@ -57,7 +57,7 @@ And does a bunch of useful things:
 
 ```js
 const lazy = require('lazyer');
-const longest = lazy.for(listOfListOfNodes)
+const longest = lazy.from(listOfListOfNodes)
     .flatten()
     .flatMap(node => node.children)
     .max(node => node.data.length);
