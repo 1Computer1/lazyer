@@ -1,6 +1,6 @@
 {
   "name": "lazyer",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Lazy iteration in JavaScript.",
   "main": "./src/index.js",
   "author": "1Computer",
